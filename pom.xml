@@ -25,6 +25,12 @@
             <artifactId>spring-boot-starter-web-services</artifactId>
         </dependency>
 
+        <!-- This dependency is needed for JDK > 9 -->
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -38,7 +44,24 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <version>0.14.0</version>
+
+                <!-- To generate the web service classes, use "mvnw jaxb2:generate" -->
+                <configuration>
+                    <schemaLanguage>WSDL</schemaLanguage>
+                    <generatePackage>br.hikarikun92.springbootsoapdemo.soap</generatePackage>
+                    <schemaDirectory>${project.basedir}/wsdl</schemaDirectory>
+                    <schemaIncludes>
+                        <include>*.wsdl</include>
+                    </schemaIncludes>
+                    <episode>false</episode>
+                    <generateDirectory>${project.basedir}/src/main/java</generateDirectory>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
 </project>

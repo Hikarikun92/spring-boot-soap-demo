@@ -36,6 +36,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- Testing libraries for SOAP clients -->
+        <dependency>
+            <groupId>org.springframework.ws</groupId>
+            <artifactId>spring-ws-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -45,6 +52,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
+            <!-- Plugin for creating classes from SOAP schemas -->
             <plugin>
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>
@@ -53,12 +61,20 @@
                 <!-- To generate the web service classes, use "mvnw jaxb2:generate" -->
                 <configuration>
                     <schemaLanguage>WSDL</schemaLanguage>
+
+                    <!-- The package to create the classes in -->
                     <generatePackage>br.hikarikun92.springbootsoapdemo.soap</generatePackage>
+
+                    <!-- The directory where the schema files are located -->
                     <schemaDirectory>${project.basedir}/wsdl</schemaDirectory>
                     <schemaIncludes>
                         <include>*.wsdl</include>
                     </schemaIncludes>
+
+                    <!-- Do not create an internal control file -->
                     <episode>false</episode>
+
+                    <!-- Create the classes in the sources folder rather than in the target one -->
                     <generateDirectory>${project.basedir}/src/main/java</generateDirectory>
                 </configuration>
             </plugin>
